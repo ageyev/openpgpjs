@@ -101,10 +101,13 @@ openpgp.encrypt(options).then(function(ciphertext) {
 ```
 
 ```js
+var privateKey = openpgp.key.readArmored(privkey).keys[0];
+privateKey.decrypt(passphrase) // unlock key with passphrase (returns boolean)
+
 options = {
     message: openpgp.message.readArmored(encrypted),     // parse armored message
     publicKeys: openpgp.key.readArmored(pubkey).keys,    // for verification (optional)
-    privateKey: openpgp.key.readArmored(privkey).keys[0] // for decryption
+    privateKey: privateKey                               // should be unlocked with passphrase
 };
 
 openpgp.decrypt(options).then(function(plaintext) {
